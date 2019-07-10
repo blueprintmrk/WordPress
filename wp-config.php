@@ -117,6 +117,9 @@ $table_prefix = 'wp_';
  */
 define('WPLANG', '');
 
+if (isset($_ENV['PANTHEON_ENVIRONMENT']) && php_sapi_name() != 'cli') {
+  // Redirect to https://$primary_domain in the Live environment
+  if ($_ENV['PANTHEON_ENVIRONMENT'] === 'live') {
  if (isset($_ENV['PANTHEON_ENVIRONMENT']) && php_sapi_name() != 'cli') {
   // Redirect to https://$primary_domain in the Live environment
   if ($_ENV['PANTHEON_ENVIRONMENT'] === 'live') {
@@ -144,7 +147,7 @@ define('WPLANG', '');
 }
 // Redirect subdomain to a specific path.
 // Check if Drupal or WordPress is running via command line
-if (isset($_ENV['PANTHEON_ENVIRONMENT']) && ($_SERVER['HTTP_HOST'] == 'blog.flexshopper.com') && (php_sapi_name() != "cli")) {
+if (isset($_ENV['PANTHEON_ENVIRONMENT']) === 'live') && ($_SERVER['HTTP_HOST'] == 'blog.flexshopper.com') && (php_sapi_name() != "cli")) {
   $newurl = 'https://www.flexshopper.com/blog/'. $_SERVER['REQUEST_URI'];
   header('HTTP/1.0 301 Moved Permanently');
   header("Location: $newurl");
@@ -179,3 +182,4 @@ if ( !defined('ABSPATH') )
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
+
