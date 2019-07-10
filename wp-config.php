@@ -142,6 +142,11 @@ define('WPLANG', '');
     exit();
   }
 }
+// Pantheon - web only.
+if (isset($_SERVER['PANTHEON_ENVIRONMENT'])) {
+  // Only on live web environment.
+  if ($_SERVER['PANTHEON_ENVIRONMENT'] == 'live') {
+   // Custom code.
 // Redirect subdomain to a specific path.
 // Check if Drupal or WordPress is running via command line
 if (isset($_ENV['PANTHEON_ENVIRONMENT']) && ($_SERVER['HTTP_HOST'] == 'blog.flexshopper.com') && (php_sapi_name() != "cli")) {
